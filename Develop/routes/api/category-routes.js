@@ -24,9 +24,13 @@ router.get('/:id', async (req, res) => {
   const id = req.params.id
   
   try{
-    const categories = await Category.findByPk(id)
-   res.json(categories)
-// include: Product, 
+    const categories = await Category.findByPk(id, {
+
+    //  include: Product, 
+    })
+
+    res.json(categories)
+
   }catch (err) {
   console.error(err);
   res.status(500).json(err);
@@ -34,15 +38,56 @@ router.get('/:id', async (req, res) => {
   
 });
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
+
+  try {
+    const categories = await Category.create(req.body)
+    res.json(categories);
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
+  }
+});
   // create a new category
-});
 
-router.put('/:id', (req, res) => {
-  // update a category by its `id` value
-});
 
-router.delete('/:id', (req, res) => {
+  router.put('/:id', async (req, res) => {
+    const categoryId = req.params.id;
+    
+    try {
+      // this checks if the category exists
+      const category = await Category.findByPk(categoryId);
+  
+      if (!category) {
+        return res.status(404).json({ error: 'Category not found' });
+      }
+  
+      // Update the category with the new data from req.body
+      const updatedCategory = await category.update(req.body);
+  
+      res.json(updatedCategory);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json(err);
+    }
+  });
+  
+router.delete('/:id', async (req, res) => {
+const id = req.params.id
+  try {
+    const categories = await Category.destroy({
+      where: {
+        id: id
+      }
+    })
+
+    res.json(categories);
+
+  } catch (err) {
+    console.error(err);
+    res.status(500).json(err);
+  }
   // delete a category by its `id` value
 });
 
