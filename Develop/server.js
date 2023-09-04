@@ -1,10 +1,13 @@
+
 require('dotenv').config()
 
-//const sequelize = require('./config/connection')//I added this....
+
 
 const express = require('express');
 const routes = require('./routes');
-const sequelize = require('.models');  // imports sequelize connection
+const sequelize = require('../Develop/config/connection')//I added this....
+// const sequelize = require('./models'); // Correct relative path
+
 
 const app = express();
 const PORT = process.env.PORT || 3001;
