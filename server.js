@@ -1,10 +1,8 @@
 
 require('dotenv').config()
 
-
-
 const express = require('express');
-const routes = require('./routes');
+const routes = require('./Develop/routes');
 const sequelize = require('./config/connection')//I added this....
 // const sequelize = require('./models'); // Correct relative path
 
